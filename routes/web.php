@@ -13,6 +13,7 @@ use App\Http\Controllers\PageController;
 use App\Livewire\Admin\HomepageCrud;
 use Illuminate\Support\Facades\File;
 use App\Livewire\Chat;
+use App\Livewire\Admin\ManageBusiness;
 
 Livewire::setScriptRoute(function($handle) {
     return Route::get('/rydepoint/public/livewire/livewire.js', $handle);
@@ -78,6 +79,9 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/page/create', PageCrud::class)->name('admin.page.create');
     Route::get('/page/edit/{id}', PageCrud::class)->name('admin.page.edit'); 
     Route::get('/homepage-content', HomepageCrud::class)->name('admin.homepage');
+
+    Route::get('/manage-business', ManageBusiness::class)->name('admin.manage-business');
+    
 
 });
    

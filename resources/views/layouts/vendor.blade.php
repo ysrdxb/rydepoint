@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Rydechair</title>
+  <title>Rydepoint</title>
 
   <link href="{{ asset('vendor/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('vendor/css/admin.css') }}" rel="stylesheet">
@@ -47,6 +47,12 @@
             <span class="nav-link-text">Settings</span>
           </a>
         </li> 
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
+          <a class="nav-link" href="{{ route('admin.manage-business') }}">
+            <i class="fa fa-fw fa-cog"></i>
+            <span class="nav-link-text">Manage Businesses</span>
+          </a>
+        </li>         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Homepage">
           <a class="nav-link" href="{{ route('admin.homepage') }}">
             <i class="fa fa-fw fa-cog"></i>

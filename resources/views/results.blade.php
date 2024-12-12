@@ -308,7 +308,7 @@
                                 <i class="ti-comment me-2"></i> SMS
                             </a>
                             <!-- Call button changes behavior based on screen size -->
-                            <a href="javascript:void(0);" class="btn btn-outline-secondary btn-sm w-100 d-flex align-items-center justify-content-center" 
+                            <a href="javascript:void(0);" class="mb-2 btn btn-outline-secondary btn-sm w-100 d-flex align-items-center justify-content-center" 
                                onclick="handleCallClick(this, '{{ $vendor->phone_number }}')">
                                 <i class="ti-mobile me-2"></i> <span>Call</span>
                             </a>
@@ -462,5 +462,3 @@
 </script>
 
 @endpush
-
-
