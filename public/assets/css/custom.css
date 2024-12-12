@@ -1,0 +1,38 @@
+/*============================================================================================*/
+/* Your custom styles below */
+/*============================================================================================*/
+@media (max-width: 767px) {
+    .hero_single.version_5 {
+        padding: 0px 0px !important;
+    }
+
+    #logo img {
+        margin: 10px 0 0;
+    }    
+
+    .logo-img{
+    }
+
+    .mm-listview li {
+        padding: 15px !important;
+    }
+    .margin_80_55 {
+        margin-top: 86px;
+    }
+    .hero_single.version_5 {
+        height: 700px;
+    }    
+}
+
+@media (min-width: 768px) {
+    .main-menu {
+        top: 0px !important;
+    }    
+}
+
+.main_title_2 span {    
+    background-color: transparent !important;
+}
+.call_section {
+    background-color: rgb(0 113 188);
+}
