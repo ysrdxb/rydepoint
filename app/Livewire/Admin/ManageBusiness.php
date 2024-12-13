@@ -14,7 +14,7 @@ class ManageBusiness extends Component
 
     public $business_id, $user_id, $business_name, $description, $email, $address, $logo, $existingLogo;
     public $phone_number, $whatsapp_number, $latitude, $longitude;
-    public $showModal = false;
+    public $showForm = false;
 
     protected $rules = [
         'user_id' => 'required|exists:users,id',
@@ -37,7 +37,7 @@ class ManageBusiness extends Component
         ]);
     }
 
-    public function openModal($id = null)
+    public function openForm($id = null)
     {
         $this->resetFields();
         if ($id) {
@@ -54,7 +54,7 @@ class ManageBusiness extends Component
             $this->latitude = $business->latitude;
             $this->longitude = $business->longitude;
         }
-        $this->showModal = true;
+        $this->showForm = true;
     }
 
     public function saveBusiness()
@@ -86,13 +86,19 @@ class ManageBusiness extends Component
         }
 
         $this->resetFields();
-        $this->showModal = false;
+        $this->showForm = false;
     }
 
     public function deleteBusiness($id)
     {
         BusinessDetail::findOrFail($id)->delete();
         session()->flash('message', 'Business deleted successfully!');
+    }
+
+    public function cancelForm()
+    {
+        $this->resetFields();
+        $this->showForm = false;
     }
 
     public function render()
