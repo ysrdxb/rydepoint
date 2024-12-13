@@ -7,7 +7,6 @@ use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 
 class Chat extends Component
 {
@@ -18,14 +17,14 @@ class Chat extends Component
     public $messageText = '';
     public $vendorId = null;
 
-    public function mount($vendorId = null, $encryptedId)
+    public function mount($encryptedId)
     {
-        $this->userId = Crypt::decrypt($encryptedId);
+        $this->userId = decrypt($encryptedId);
         if (Auth::id() !== $this->userId) {
             abort(403);
         }
 
-        $this->vendorId = $vendorId;
+        $this->vendorId = $userId;
         $this->loadConversations();
 
         if ($vendorId) {
