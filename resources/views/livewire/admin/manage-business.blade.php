@@ -49,13 +49,11 @@
                         <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
                     @endforeach
                 </select>
-                @error('user_id') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-3">
                 <label>Business Name</label>
                 <input type="text" wire:model="business_name" class="form-control">
-                @error('business_name') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-3">
@@ -66,7 +64,6 @@
             <div class="mb-3">
                 <label>Email</label>
                 <input type="email" wire:model="email" class="form-control">
-                @error('email') <span class="text-danger">{{ $message }}</span> @enderror
             </div>
 
             <div class="mb-3">
