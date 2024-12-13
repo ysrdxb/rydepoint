@@ -4,49 +4,71 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Business;
-use App\Models\User;
 use Livewire\WithFileUploads;
+use App\Models\BusinessDetail;
+use App\Models\User;
 
-class BusinessManager extends Component
+class ManageBusiness extends Component
 {
     use WithPagination, WithFileUploads;
 
-    public $showForm = false, $businessId, $user_id, $business_name, $description, $email, $phone_number, $whatsapp_number, $address, $latitude, $longitude, $logo, $existingLogo;
+    public $business_id, $user_id, $business_name, $description, $email, $address, $logo, $existingLogo;
+    public $phone_number, $whatsapp_number, $latitude, $longitude;
+    public $showForm = false;
 
     protected $rules = [
-        'user_id' => 'required',
-        'business_name' => 'required',
-        'email' => 'required|email',
-        'phone_number' => 'required',
-        'address' => 'required',
+        'user_id' => 'required|exists:users,id',
+        'business_name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'email' => 'nullable|email|max:255',
+        'address' => 'nullable|string|max:255',
+        'logo' => 'nullable|image|max:1024',
+        'phone_number' => 'nullable|string|max:20',
+        'whatsapp_number' => 'nullable|string|max:20',
+        'latitude' => 'nullable|numeric',
+        'longitude' => 'nullable|numeric',
     ];
 
-    public function render()
+    public function resetFields()
     {
-        return view('livewire.business-manager', [
-            'businesses' => Business::paginate(10),
-            'vendors' => User::all(),
+        $this->reset([
+            'business_id', 'user_id', 'business_name', 'description', 'email', 'address',
+            'logo', 'existingLogo', 'phone_number', 'whatsapp_number', 'latitude', 'longitude'
         ]);
     }
 
-    public function showForm()
+    public function openForm($id = null)
     {
-        $this->resetForm();
+        $this->resetFields();
+        if ($id) {
+            $business = BusinessDetail::findOrFail($id);
+            $this->business_id = $business->id;
+            $this->user_id = $business->user_id;
+            $this->business_name = $business->business_name;
+            $this->description = $business->description;
+            $this->email = $business->email;
+            $this->address = $business->address;
+            $this->existingLogo = $business->logo;
+            $this->phone_number = $business->phone_number;
+            $this->whatsapp_number = $business->whatsapp_number;
+            $this->latitude = $business->latitude;
+            $this->longitude = $business->longitude;
+        }
         $this->showForm = true;
     }
 
     public function saveBusiness()
     {
         $this->validate();
+
         $data = [
             'user_id' => $this->user_id,
             'business_name' => $this->business_name,
             'description' => $this->description,
             'email' => $this->email,
+            'address' => $this->address,
             'phone_number' => $this->phone_number,
             'whatsapp_number' => $this->whatsapp_number,
-            'address' => $this->address,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
         ];
@@ -55,49 +77,38 @@ class BusinessManager extends Component
             $data['logo'] = $this->logo->store('logos', 'public');
         }
 
-        if ($this->businessId) {
-            Business::find($this->businessId)->update($data);
+        if ($this->business_id) {
+            BusinessDetail::findOrFail($this->business_id)->update($data);
+            session()->flash('message', 'Business updated successfully!');
         } else {
-            Business::create($data);
+            BusinessDetail::create($data);
+            session()->flash('message', 'Business created successfully!');
         }
 
-        $this->cancelForm();
-    }
-
-    public function editBusiness($id)
-    {
-        $business = Business::findOrFail($id);
-        $this->businessId = $business->id;
-        $this->user_id = $business->user_id;
-        $this->business_name = $business->business_name;
-        $this->description = $business->description;
-        $this->email = $business->email;
-        $this->phone_number = $business->phone_number;
-        $this->whatsapp_number = $business->whatsapp_number;
-        $this->address = $business->address;
-        $this->latitude = $business->latitude;
-        $this->longitude = $business->longitude;
-        $this->existingLogo = $business->logo;
-        $this->showForm = true;
+        $this->resetFields();
+        $this->showForm = false;
     }
 
     public function deleteBusiness($id)
     {
-        Business::findOrFail($id)->delete();
-        $this->render();
+        BusinessDetail::findOrFail($id)->delete();
+        session()->flash('message', 'Business deleted successfully!');
     }
 
     public function cancelForm()
     {
-        $this->resetForm();
+        $this->resetFields();
         $this->showForm = false;
     }
 
-    private function resetForm()
+    public function render()
     {
-        $this->reset([
-            'businessId', 'user_id', 'business_name', 'description', 'email', 'phone_number',
-            'whatsapp_number', 'address', 'latitude', 'longitude', 'logo', 'existingLogo'
-        ]);
+        $businesses = BusinessDetail::paginate(10);
+        $vendors = User::where('role', 'vendor')->get();
+
+        return view('livewire.admin.manage-business', [
+            'businesses' => $businesses,
+            'vendors' => $vendors,
+        ])->layout('layouts.vendor');
     }
 }
