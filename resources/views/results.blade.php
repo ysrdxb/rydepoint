@@ -313,7 +313,7 @@
                                 <i class="ti-mobile me-2"></i> <span>Call</span>
                             </a>
 
-                            <a href="{{ route('chat', ['vendorId' => encrypt($vendor->user->id)]) }}" class="btn btn-outline-danger btn-sm w-100 d-flex align-items-center justify-content-center">Chat with {{ $vendor->business_name }}</a>
+                            <a href="{{ route('chat', ['encryptedId' => encrypt($vendor->user->id)]) }}" class="btn btn-outline-danger btn-sm w-100 d-flex align-items-center justify-content-center">Chat with {{ $vendor->business_name }}</a>
                             
                         </div>
                     </div>

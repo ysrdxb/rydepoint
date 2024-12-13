@@ -23,7 +23,7 @@ Livewire::setUpdateRoute(function($handle) {
     return Route::get('/rydepoint/public/livewire/update', $handle);
 });
 
-Route::get('/chat/{vendorId?}', Chat::class)->name('chat')->middleware('auth');
+Route::get('/chat/{encryptedId?}', Chat::class)->name('chat')->middleware('auth');
 
 Route::get('/generate-link', function () {
     $target = storage_path('app/public');
