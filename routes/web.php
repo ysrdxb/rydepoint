@@ -81,8 +81,6 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/homepage-content', HomepageCrud::class)->name('admin.homepage');
 
     Route::get('/manage-business', ManageBusiness::class)->name('admin.manage-business');
-    
-
 });
    
 

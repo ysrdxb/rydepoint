@@ -12,7 +12,8 @@ class ManageBusiness extends Component
 {
     use WithPagination, WithFileUploads;
 
-    public $business_id, $user_id, $business_name, $description, $email, $address, $logo, $phone_number, $whatsapp_number, $latitude, $longitude, $existingLogo;
+    public $business_id, $user_id, $business_name, $description, $email, $address, $logo, $existingLogo;
+    public $phone_number, $whatsapp_number, $latitude, $longitude;
     public $showModal = false;
 
     protected $rules = [
@@ -28,13 +29,14 @@ class ManageBusiness extends Component
         'longitude' => 'nullable|numeric',
     ];
 
-    // Reset fields after every action
     public function resetFields()
     {
-        $this->reset(['business_id', 'user_id', 'business_name', 'description', 'email', 'address', 'logo', 'phone_number', 'whatsapp_number', 'latitude', 'longitude', 'existingLogo']);
+        $this->reset([
+            'business_id', 'user_id', 'business_name', 'description', 'email', 'address',
+            'logo', 'existingLogo', 'phone_number', 'whatsapp_number', 'latitude', 'longitude'
+        ]);
     }
 
-    // Open modal for creating or editing
     public function openModal($id = null)
     {
         $this->resetFields();
@@ -55,7 +57,6 @@ class ManageBusiness extends Component
         $this->showModal = true;
     }
 
-    // Save business detail
     public function saveBusiness()
     {
         $this->validate();
@@ -88,7 +89,6 @@ class ManageBusiness extends Component
         $this->showModal = false;
     }
 
-    // Delete a business detail
     public function deleteBusiness($id)
     {
         BusinessDetail::findOrFail($id)->delete();
