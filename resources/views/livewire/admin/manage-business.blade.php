@@ -6,7 +6,7 @@
     @endif
 
     @if(!$showForm)
-        <button wire:click="showForm" class="btn btn-primary mb-3">Add New Business</button>
+        <button wire:click="openForm" class="btn btn-primary mb-3">Add New Business</button>
 
         <table class="table table-bordered">
             <thead>
@@ -28,7 +28,7 @@
                         <td>{{ $business->phone_number }}</td>
                         <td>{{ $business->address }}</td>
                         <td>
-                            <button wire:click="editBusiness({{ $business->id }})" class="btn btn-sm btn-warning">Edit</button>
+                            <button wire:click="openForm({{ $business->id }})" class="btn btn-sm btn-warning">Edit</button>
                             <button wire:click="deleteBusiness({{ $business->id }})" class="btn btn-sm btn-danger">Delete</button>
                         </td>
                     </tr>

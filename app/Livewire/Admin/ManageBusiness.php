@@ -103,12 +103,9 @@ class ManageBusiness extends Component
 
     public function render()
     {
-        $businesses = BusinessDetail::paginate(10);
-        $vendors = User::where('role', 'vendor')->get();
-
         return view('livewire.admin.manage-business', [
-            'businesses' => $businesses,
-            'vendors' => $vendors,
+            'businesses' => BusinessDetail::paginate(10),
+            'vendors' => User::where('role', 'vendor')->get(),
         ])->layout('layouts.vendor');
     }
 }
